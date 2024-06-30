@@ -2,6 +2,7 @@ import { Field, Form, Formik, ErrorMessage } from "formik";
 import { useId } from "react";
 import { nanoid } from "nanoid";
 import * as Yup from "yup";
+import css from "../ContactForm/ContactForm.module.css";
 
 const ContactSchema = Yup.object().shape({
   name: Yup.string()
@@ -13,30 +14,46 @@ const ContactSchema = Yup.object().shape({
     .max(50, "Maximum 50 numbers")
     .matches(/^\d+$/, "Must be only digits")
     .required("Required"),
-  id: Yup.string(),
+  //   id: Yup.string(),
 });
 
 export default function ContactForm({ onAdd }) {
   const nameFieldId = useId();
   const numberFieldId = useId();
   const handleSubmit = (values, actions) => {
-    onAdd(values);
+    onAdd({ ...values, id: nanoid() });
     actions.resetForm();
   };
   return (
     <Formik
-      initialValues={{ name: "", number: "", id: nanoid() }}
+      initialValues={{ name: "", number: "" }}
       validationSchema={ContactSchema}
       onSubmit={handleSubmit}
     >
-      <Form>
-        <label htmlFor={nameFieldId}>Name</label>
-        <Field type="text" name="name" id={nameFieldId}></Field>
-        <ErrorMessage name="name" />
-        <label htmlFor={numberFieldId}>Number</label>
-        <Field type="tel" name="number" id={numberFieldId}></Field>
-        <ErrorMessage name="number" />
-        <button type="submit">Add contact</button>
+      <Form className={css.form}>
+        <label className={css.formLabel} htmlFor={nameFieldId}>
+          Name
+        </label>
+        <Field
+          className={css.formInput}
+          type="text"
+          name="name"
+          id={nameFieldId}
+        ></Field>
+        <ErrorMessage className={css.errorMessage} name="name" />
+        <label className={css.formLabel} htmlFor={numberFieldId}>
+          Number
+        </label>
+        <Field
+          className={css.formInput}
+          type="tel"
+          name="number"
+          id={numberFieldId}
+        ></Field>
+        <ErrorMessage className={css.errorMessage} name="number" />
+        <button className={css.formBtn} type="submit">
+          Add contact
+        </button>
       </Form>
     </Formik>
   );

@@ -3,15 +3,16 @@ import SearchBox from "../SearchBox/SearchBox";
 import ContactList from "../ContactList/ContactList";
 import { useState, useEffect } from "react";
 import contactsList from "../../contactsList.json";
+import css from "../App/App.module.css";
 
 export default function App() {
   const [contacts, setContacts] = useState(() => {
     const savedContacts = window.localStorage.getItem("saved-contacts");
-    console.log(savedContacts);
     if (savedContacts !== null) {
       // window.localStorage.removeItem("saved-contacts");
       return JSON.parse(savedContacts);
     }
+
     return contactsList;
   });
 
@@ -39,7 +40,7 @@ export default function App() {
 
   return (
     <div>
-      <h1>Phonebook</h1>
+      <h1 className={css.title}>Phonebook</h1>
       <ContactForm onAdd={addContact} />
       <SearchBox value={filter} onFilter={setFilter} />
       <ContactList lists={visibleContacts} onDelete={deleteContact} />

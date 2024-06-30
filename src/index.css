@@ -23,6 +23,8 @@ a:hover {
 }
 
 body {
+  max-width: 600px;
+  padding: 50px;
   margin: 0;
   display: flex;
   place-items: center;
@@ -37,6 +39,7 @@ h1 {
 
 ul {
   list-style: none;
+  padding: 0;
 }
 
 button {
